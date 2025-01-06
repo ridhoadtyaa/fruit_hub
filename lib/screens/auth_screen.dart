@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fruit_hub/screens/home_screen.dart';
+import 'package:fruit_hub/services/shared_preferences_service.dart';
 import '../widgets/button/button_primary.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -34,8 +36,39 @@ class HeroSection extends StatelessWidget {
   }
 }
 
-class WelcomeContent extends StatelessWidget {
+class WelcomeContent extends StatefulWidget {
   const WelcomeContent({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _WelcomeContentState createState() => _WelcomeContentState();
+}
+
+class _WelcomeContentState extends State<WelcomeContent> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadName();
+  }
+
+  Future<void> _loadName() async {
+    String? name = await SharedPreferencesService.loadData('name');
+    setState(() {
+      _controller.text = name ?? '';
+    });
+  }
+
+  Future<void> _saveName() async {
+    await SharedPreferencesService.saveData('name', _controller.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +88,9 @@ class WelcomeContent extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          const TextField(
-            decoration: InputDecoration(
+          TextField(
+            controller: _controller,
+            decoration: const InputDecoration(
               hintText: 'Robert',
               hintStyle: TextStyle(
                 color: Color(0xFFC2BDBD),
@@ -78,7 +112,32 @@ class WelcomeContent extends StatelessWidget {
               child: ButtonPrimary(
                 text: 'Start Ordering',
                 onPressed: () {
-                  print('OK');
+                  if (_controller.text.isEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Error'),
+                          content: const Text('Name cannot be empty.'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    _saveName();
+                    _loadName();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const HomeScreen();
+                    }));
+                  }
                 },
               ),
             ),
