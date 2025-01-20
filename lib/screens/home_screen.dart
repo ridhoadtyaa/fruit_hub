@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fruit_hub/models/salad_model.dart';
 import 'package:fruit_hub/services/shared_preferences_service.dart';
 import 'package:fruit_hub/widgets/drawer.dart';
+import 'package:fruit_hub/widgets/salad_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -131,7 +133,36 @@ class HomeScreen extends StatelessWidget {
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF27214D)),
-            )
+            ),
+            const SizedBox(height: 24.0),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal, // Scroll horizontal
+              child: Row(
+                children: [
+                  SaladCard(
+                    salad: Salad(
+                      name: 'Honey lime combo',
+                      price: 2000,
+                      image: 'assets/image/salad/combo1.png',
+                    ),
+                  ),
+                  SaladCard(
+                    salad: Salad(
+                      name: 'Berry mango combo',
+                      price: 8000,
+                      image: 'assets/image/salad/combo2.png',
+                    ),
+                  ),
+                  SaladCard(
+                    salad: Salad(
+                      name: 'Berry mango combo',
+                      price: 2000,
+                      image: 'assets/image/salad/combo1.png',
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
