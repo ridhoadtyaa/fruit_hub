@@ -72,7 +72,13 @@ class SaladCard extends StatelessWidget {
                         style: const ButtonStyle(
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
-                        onPressed: () => {print('oke gas')},
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Added to cart!'),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

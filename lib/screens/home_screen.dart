@@ -4,6 +4,7 @@ import 'package:fruit_hub/models/salad_model.dart';
 import 'package:fruit_hub/services/shared_preferences_service.dart';
 import 'package:fruit_hub/widgets/drawer.dart';
 import 'package:fruit_hub/widgets/salad_card.dart';
+import 'package:fruit_hub/widgets/selectable_menu.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -163,6 +164,8 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(height: 48.0),
+            const SelectableMenu()
           ],
         ),
       ),
