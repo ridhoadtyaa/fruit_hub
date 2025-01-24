@@ -5,14 +5,16 @@ import 'package:fruit_hub/models/salad_model.dart';
 class SaladCard extends StatelessWidget {
   final Salad salad;
 
-  const SaladCard({super.key, required this.salad});
+  final Color? bgColor;
+
+  const SaladCard({super.key, required this.salad, this.bgColor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.only(right: 23.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: salad.bgColor ?? Colors.white,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
