@@ -10,9 +10,9 @@ class WelcomeScreen extends StatelessWidget {
     return const Scaffold(
       body: Column(
         children: [
-          HeroSection(), // Gunakan widget HeroSection
+          HeroSection(),
           SizedBox(height: 56),
-          WelcomeContent(), // Gunakan widget WelcomeContent
+          WelcomeContent(),
         ],
       ),
     );

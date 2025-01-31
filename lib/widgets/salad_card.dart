@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fruit_hub/models/salad_model.dart';
+import 'package:fruit_hub/screens/detail_salad_screen.dart';
 
 class SaladCard extends StatelessWidget {
   final Salad salad;
-
   final Color? bgColor;
 
   const SaladCard({super.key, required this.salad, this.bgColor});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailSaladScreen(salad: salad),
+          ),
+        );
+      },
+      child: Container(
         margin: const EdgeInsets.only(right: 23.0),
         decoration: BoxDecoration(
           color: salad.bgColor ?? Colors.white,
@@ -90,19 +99,22 @@ class SaladCard extends StatelessWidget {
                 top: 0,
                 right: 0,
                 child: IconButton(
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    icon: SvgPicture.asset(
-                      'assets/svg/heart.svg',
-                      semanticsLabel: 'love',
-                    ),
-                    style: const ButtonStyle(
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    onPressed: () => {print('oke gas')}),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  icon: SvgPicture.asset(
+                    'assets/svg/heart.svg',
+                    semanticsLabel: 'love',
+                  ),
+                  style: const ButtonStyle(
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  onPressed: () => {print('oke gas')},
+                ),
               ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

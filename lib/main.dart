@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fruit_hub/screens/home_screen.dart';
+import 'package:fruit_hub/services/shared_preferences_service.dart';
 import 'screens/welcome_screen.dart';
 
 void main() {
@@ -7,6 +9,11 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  Future<String?> _loadName() async {
+    String? name = await SharedPreferencesService.loadData('name');
+    return name;
+  }
 
   // This widget is the root of your application.
   @override
@@ -32,7 +39,18 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           fontFamily: 'Brandon_Grotesque'),
-      home: const WelcomeScreen(),
+      home: FutureBuilder<String?>(
+        future: _loadName(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasData && snapshot.data != null) {
+            return const HomeScreen(); // Replace with your HomeScreen widget
+          } else {
+            return const WelcomeScreen();
+          }
+        },
+      ),
     );
   }
 }
